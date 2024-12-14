@@ -337,7 +337,7 @@ def analyze_future_factors(selected_state, forecast_days):
     forecast['Day'] = forecast['ds'].dt.day
     analysis_fig = px.line(
         forecast, x='ds', y=['yhat', 'yhat_lower', 'yhat_upper'],
-        title="Analysis of Forecasted Factors for Next Days",
+        title="Upper and Lower Bound variations of Forecast Cloudy Sky UVI for the selected State",
         labels={"value": "UVI", "variable": "Type", "ds": "Date"},
         line_group="variable",
     )
