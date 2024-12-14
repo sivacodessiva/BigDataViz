@@ -14,219 +14,260 @@ data['Month'] = data['Date'].dt.month
 data['Day'] = data['Date'].dt.day
 
 
-layout = html.Div([
-    html.H1("Forecast Cloudy Sky UVI Using Prophet", style={"text-align": "center"}),
+layout = html.Div(
+    style={"backgroundColor": "#f7f9fc", "padding": "20px", "fontFamily": "Arial"},
+    children=[
+        html.H1(
+            "Forecast Cloudy Sky UVI Using Prophet",
+            style={"textAlign": "center", "color": "#2c3e50", "fontWeight": "bold", "marginBottom": "20px"}
+        ),
 
-    html.Div([
-        html.Label("Select Your State:"),
-        dcc.Dropdown(
-            id='state-dropdown',
-            options=[{'label': state, 'value': state} for state in data['NAME'].unique()],
-            value=data['NAME'].unique()[0],
-            clearable=False,
-            style={"width": "400px", "margin": "10px auto"}
-        )
-    ], style={"text-align": "center"}),
-
-    html.Div([
-        html.Label("Select Features (Optional):"),
-        dcc.Checklist(
-            id='regressor-checklist',
-            options=[
-                {'label': 'Clear Sky UVI', 'value': 'Clear Sky UVI'},
-                {'label': 'Total Column Ozone', 'value': 'Total Column Ozone'}
-            ],
-            value=[],
-            style={"width": "400px", "margin": "10px auto"}
-        )
-    ], style={"text-align": "center"}),
-
-    html.Div([
-        html.Label("Forecast for Future Dates:"),
-        dcc.Input(
-            id='forecast-days-input',
-            type='number',
-            value=30,
-            placeholder="Enter number of days to forecast",
-            style={"width": "200px", "margin": "10px"}
-        )
-    ], style={"text-align": "center"}),
-
-    html.Div([
-        html.Label("Select a Specific Future Date:"),
-        dcc.DatePickerSingle(
-            id='future-date-picker',
-            min_date_allowed=data['Date'].max().date(),
-            max_date_allowed=pd.to_datetime("2025-12-31").date(),
-            initial_visible_month=data['Date'].max().date(),
-            placeholder="Select a future date",
-            style={"margin": "10px auto"}
-        )
-    ], style={"text-align": "center"}),
-
-    html.Div([
-        dcc.Graph(id="forecast-graph", style={"height": "500px", "border": "2px solid black", "margin": "auto"})
-    ], style={"text-align": "center"}),
-
-    html.Div([
-        html.Label("Forecasted UVI for Selected Date:"),
-        html.Div(id="forecast-value", style={"text-align": "center", "margin": "10px"})
-    ]),
-
-    html.Div([
-        html.H3("Interactive Insights", style={"text-align": "center"}),
-
-        html.Button("Show/Hide Insights", id="toggle-insights-btn", n_clicks=0, style={"margin": "10px auto", "display": "block"}),
-
-        dbc.Collapse(
-            id="insights-collapse",
-            is_open=False,
+        # Arrange boxes side by side in one row
+        dbc.Row(
+            justify="center",
             children=[
-                html.Div([
-                    dcc.Graph(id="future-factors-analysis", style={"height": "500px", "border": "1px solid black", "margin": "20px"}),
-                ], style={"display": "flex", "flex-wrap": "wrap", "justify-content": "center"}),
-
-                html.Div([
-                    dcc.Graph(id="seasonal-trends", style={"height": "400px", "margin": "20px"}),
-                    dcc.Graph(id="distribution-plot", style={"height": "300px", "border": "1px solid black", "margin": "10px"})
-                ], style={"display": "flex", "flex-wrap": "wrap", "justify-content": "center"})
-            ]
-        )
-    ]),
-
-    html.Div([
-        html.H3("Skin Damage Risk Analysis", style={"text-align": "center"}),
-
-        html.Button("Show/Hide Skin Damage Risk Analysis", id="toggle-skin-risk-btn", n_clicks=0,
-                    style={"margin": "10px auto", "display": "block"}),
-
-        dbc.Collapse(
-            id="skin-risk-collapse",
-            is_open=False,
-            children=[
-                html.Div([
-                    html.Label("Select a Specific Date:"),
-                    dcc.DatePickerSingle(
-                        id='skin-risk-date-picker',
-                        min_date_allowed=data['Date'].min().date(),
-                        max_date_allowed=(data['Date'].max() + pd.Timedelta(days=365)).date(),
-                        initial_visible_month=data['Date'].max().date(),
-                        placeholder="Select a date",
-                        style={"margin": "10px auto"}
-                    ),
-                    html.Label("Select Location:"),
-                    dcc.Dropdown(
-                        id='skin-risk-location',
-                        options=[{'label': state, 'value': state} for state in data['NAME'].unique()],
-                        value=data['NAME'].unique()[0],
-                        clearable=False,
-                        style={"width": "400px", "margin": "10px auto"}
-                    ),
-                ], style={"text-align": "center"}),
-
-                html.Div([
-                    dcc.Graph(id="skin-risk-gauge", style={"height": "400px", "border": "2px solid black", "margin": "auto"})
-                ], style={"text-align": "center"}),
-
-                html.Div([
-                    html.Label("Recommendations:"),
-                    html.Div(id="skin-risk-recommendations", style={"text-align": "center", "margin": "10px"})
-                ]),
-
-
-                html.Div([
-                    html.H4("10-Day Skin Damage Risk Forecast", style={"text-align": "center"}),
-
-                    html.Div([
-                        html.Label("Select Starting Date for Forecast:"),
-                        dcc.DatePickerSingle(
-                            id="ten-day-forecast-start-date",
-                            min_date_allowed=data['Date'].min().date(),
-                            max_date_allowed=(data['Date'].max() + pd.Timedelta(days=365)).date(),
-                            initial_visible_month=pd.Timestamp.now().date(),
-                            date=pd.Timestamp.now().date(),
-                            style={"margin": "10px auto", "display": "block"}
-                        )
-                    ], style={"text-align": "center"}),
-
-                    dcc.Loading(
-                        id="loading-10-day-forecast",
-                        type="circle",
+                dbc.Col(
+                    width=3,
+                    children=dbc.Card(
+                        style={"padding": "20px", "marginBottom": "20px", "border": "2px solid #2980b9", "borderRadius": "10px"},
                         children=[
-                            dash_table.DataTable(
-                                id="ten-day-forecast-table",
-                                style_table={"overflowX": "auto", "margin": "10px auto", "width": "90%"},
-                                style_header={"backgroundColor": "lightgrey", "fontWeight": "bold", "textAlign": "center"},
-                                style_data={"textAlign": "center"},
-                                columns=[
-                                    {"name": "Date", "id": "date"},
-                                    {"name": "Forecasted UV Index", "id": "uv_index"},
-                                    {"name": "Risk Category", "id": "risk"},
-                                    {"name": "Recommendations", "id": "recommendations"}
-                                ],
-                                data=[] 
+                            html.Label("Select Your State:", style={"fontWeight": "bold", "color": "#34495e"}),
+                            dcc.Dropdown(
+                                id='state-dropdown',
+                                options=[{'label': state, 'value': state} for state in data['NAME'].unique()],
+                                value=data['NAME'].unique()[0],
+                                clearable=False,
+                                style={"width": "100%", "margin": "auto"}
                             )
                         ]
-                    )
-                ])
-            ]
-        )
-    ]),
-    html.Div([
-        html.H3("Minimal Erythemal Dose (MED) Analysis", style={"text-align": "center"}),
+                    ),
+                ),
+                dbc.Col(
+                    width=3,
+                    children=dbc.Card(
+                        style={"padding": "20px", "marginBottom": "20px", "border": "2px solid #27ae60", "borderRadius": "10px"},
+                        children=[
+                            html.Label("Select Features (Optional):", style={"fontWeight": "bold", "color": "#34495e"}),
+                            dcc.Checklist(
+                                id='regressor-checklist',
+                                options=[
+                                    {'label': 'Clear Sky UVI', 'value': 'Clear Sky UVI'},
+                                    {'label': 'Total Column Ozone', 'value': 'Total Column Ozone'}
+                                ],
+                                value=[],
+                                style={"padding": "10px", "color": "#34495e"}
+                            )
+                        ]
+                    ),
+                ),
+                dbc.Col(
+                    width=3,
+                    children=dbc.Card(
+                        style={"padding": "20px", "marginBottom": "20px", "border": "2px solid #e67e22", "borderRadius": "10px"},
+                        children=[
+                            html.Label("Forecast for Future Dates:", style={"fontWeight": "bold", "color": "#34495e"}),
+                            dcc.Input(
+                                id='forecast-days-input',
+                                type='number',
+                                value=30,
+                                placeholder="Enter number of days to forecast",
+                                style={"width": "100%", "margin": "10px auto", "display": "block"}
+                            )
+                        ]
+                    ),
+                ),
+                dbc.Col(
+                    width=3,
+                    children=dbc.Card(
+                        style={"padding": "20px", "marginBottom": "20px", "border": "2px solid #8e44ad", "borderRadius": "10px"},
+                        children=[
+                            html.Label("Select a Specific Future Date:", style={"fontWeight": "bold", "color": "#34495e"}),
+                            dcc.DatePickerSingle(
+                                id='future-date-picker',
+                                min_date_allowed=data['Date'].max().date(),
+                                max_date_allowed=pd.to_datetime("2025-12-31").date(),
+                                initial_visible_month=data['Date'].max().date(),
+                                placeholder="Select a future date",
+                                style={"margin": "10px auto", "display": "block"}
+                            )
+                        ]
+                    ),
+                ),
+            ],
+        ),
 
-        html.Button("Show/Hide MED Analysis", id="toggle-med-btn", n_clicks=0,
-                    style={"margin": "10px auto", "display": "block"}),
 
-        dbc.Collapse(
-            id="med-collapse",
-            is_open=False,
+        # Forecast Graph
+        dbc.Card(
+            style={"padding": "20px", "marginBottom": "20px", "border": "2px solid #16a085", "borderRadius": "10px"},
             children=[
-                html.Div([
+                dcc.Graph(id="forecast-graph", style={"height": "500px", "borderRadius": "10px"})
+            ]
+        ),
 
-                    html.Label("Select State:"),
-                    dcc.Dropdown(
-                        id='med-state-dropdown',
-                        options=[{'label': state, 'value': state} for state in data['NAME'].unique()],
-                        value=data['NAME'].unique()[0],
-                        clearable=False,
-                        style={"width": "400px", "margin": "10px auto"}
+        # Forecast Value Display (narrow and centered)
+        dbc.Row(
+            justify="center",
+            children=[
+                dbc.Col(
+                    width=6,  # Narrow the box by limiting the column width
+                    children=dbc.Card(
+                        style={"padding": "20px", "marginBottom": "20px", "border": "2px solid #c0392b", "borderRadius": "10px"},
+                        children=[
+                            html.Label("Forecasted UVI for Selected Date:", style={"fontWeight": "bold", "color": "#34495e"}),
+                            html.Div(
+                                id="forecast-value",
+                                style={"textAlign": "center", "margin": "10px", "color": "#34495e"}
+                            )
+                        ]
                     ),
-                    html.Label("Select Skin Type:"),
-                    dcc.Dropdown(
-                        id='skin-type-dropdown',
-                        options=[
-                            {'label': 'Type I - Very Fair', 'value': 200},
-                            {'label': 'Type II - Fair', 'value': 300},
-                            {'label': 'Type III - Medium', 'value': 400},
-                            {'label': 'Type IV - Olive', 'value': 600},
-                            {'label': 'Type V - Brown', 'value': 800},
-                            {'label': 'Type VI - Dark Brown/Black', 'value': 1000}
-                        ],
-                        value=200,
-                        clearable=False,
-                        style={"width": "400px", "margin": "10px auto"}
-                    ),
-                    html.Label("Select Date for MED Calculation:"),
-                    dcc.DatePickerSingle(
-                        id='med-date-picker',
-                        min_date_allowed=data['Date'].min().date(),
-                        max_date_allowed=(data['Date'].max() + pd.Timedelta(days=365)).date(),
-                        initial_visible_month=data['Date'].max().date(),
-                        placeholder="Select a date",
-                        style={"margin": "10px auto"}
-                    )
-                ], style={"text-align": "center"}),
+                )
+            ],
+        ),
 
-                html.Div([
-                    html.Label("Time to Erythema (minutes):"),
-                    html.Div(id="med-result", style={"text-align": "center", "margin": "10px"})
-                ])
+
+        # Interactive Insights Section
+        html.Div(
+            style={"marginBottom": "20px"},
+            children=[
+                html.H3("Interactive Insights", style={"textAlign": "center", "color": "#2c3e50", "marginBottom": "10px"}),
+                dbc.Button("Show/Hide Insights", id="toggle-insights-btn", color="primary", style={"margin": "10px auto", "display": "block"}),
+                dbc.Collapse(
+                    id="insights-collapse",
+                    is_open=False,
+                    children=[
+                        dbc.Card(
+                            style={"padding": "20px", "marginBottom": "20px", "border": "2px solid #1abc9c", "borderRadius": "10px"},
+                            children=[
+                                dcc.Graph(id="future-factors-analysis", style={"height": "500px", "borderRadius": "10px"})
+                            ]
+                        ),
+                        dbc.Row(
+                            justify="center",
+                            children=[
+                                dbc.Col(
+                                    width=10,  # Adjust the width to control the space it takes
+                                    children=dbc.Card(
+                                        style={"padding": "20px", "marginBottom": "20px", "border": "2px solid #f39c12", "borderRadius": "10px"},
+                                        children=[
+                                            dcc.Graph(id="seasonal-trends", style={"height": "400px", "width": "100%"}),
+                                            dcc.Graph(id="distribution-plot", style={"height": "300px", "width": "100%"})
+                                        ]
+                                    ),
+                                )
+                            ],
+                        )
+                    ]
+                )
+            ]
+        ),
+
+        # Skin Damage Risk Analysis Section
+        html.Div(
+            style={"marginBottom": "20px"},
+            children=[
+                html.H3("Skin Damage Risk Analysis", style={"textAlign": "center", "color": "#2c3e50", "marginBottom": "10px"}),
+                dbc.Button("Show/Hide Skin Damage Risk Analysis", id="toggle-skin-risk-btn", color="warning", style={"margin": "10px auto", "display": "block"}),
+                dbc.Collapse(
+                    id="skin-risk-collapse",
+                    is_open=False,
+                    children=[
+                        dbc.Card(
+                            style={"padding": "20px", "marginBottom": "20px", "border": "2px solid #e74c3c", "borderRadius": "10px"},
+                            children=[
+                                html.Label("Select a Specific Date:", style={"fontWeight": "bold", "color": "#34495e"}),
+                                dcc.DatePickerSingle(
+                                    id='skin-risk-date-picker',
+                                    min_date_allowed=data['Date'].min().date(),
+                                    max_date_allowed=(data['Date'].max() + pd.Timedelta(days=365)).date(),
+                                    initial_visible_month=data['Date'].max().date(),
+                                    placeholder="Select a date",
+                                    style={"margin": "10px auto", "display": "block"}
+                                ),
+                                html.Label("Select Location:", style={"fontWeight": "bold", "color": "#34495e"}),
+                                dcc.Dropdown(
+                                    id='skin-risk-location',
+                                    options=[{'label': state, 'value': state} for state in data['NAME'].unique()],
+                                    value=data['NAME'].unique()[0],
+                                    clearable=False,
+                                    style={"width": "400px", "margin": "10px auto"}
+                                )
+                            ]
+                        ),
+                        dcc.Graph(id="skin-risk-gauge", style={"height": "400px", "borderRadius": "10px"}),
+                        dbc.Card(
+                            style={"padding": "20px", "marginBottom": "20px", "border": "2px solid #34495e", "borderRadius": "10px"},
+                            children=[
+                                html.Label("Recommendations:", style={"fontWeight": "bold", "color": "#34495e"}),
+                                html.Div(id="skin-risk-recommendations", style={"textAlign": "center", "margin": "10px", "color": "#34495e"})
+                            ]
+                        )
+                    ]
+                )
+            ]
+        ),
+
+        # Minimal Erythemal Dose Section
+        html.Div(
+            style={"marginBottom": "20px"},
+            children=[
+                html.H3("Minimal Erythemal Dose (MED) Analysis", style={"textAlign": "center", "color": "#2c3e50", "marginBottom": "10px"}),
+                dbc.Button("Show/Hide MED Analysis", id="toggle-med-btn", color="danger", style={"margin": "10px auto", "display": "block"}),
+                dbc.Collapse(
+                    id="med-collapse",
+                    is_open=False,
+                    children=[
+                        dbc.Card(
+                            style={"padding": "20px", "marginBottom": "20px", "border": "2px solid #8e44ad", "borderRadius": "10px"},
+                            children=[
+                                html.Label("Select State:", style={"fontWeight": "bold", "color": "#34495e"}),
+                                dcc.Dropdown(
+                                    id='med-state-dropdown',
+                                    options=[{'label': state, 'value': state} for state in data['NAME'].unique()],
+                                    value=data['NAME'].unique()[0],
+                                    clearable=False,
+                                    style={"width": "400px", "margin": "10px auto"}
+                                ),
+                                html.Label("Select Skin Type:", style={"fontWeight": "bold", "color": "#34495e"}),
+                                dcc.Dropdown(
+                                    id='skin-type-dropdown',
+                                    options=[
+                                        {'label': 'Type I - Very Fair', 'value': 200},
+                                        {'label': 'Type II - Fair', 'value': 300},
+                                        {'label': 'Type III - Medium', 'value': 400},
+                                        {'label': 'Type IV - Olive', 'value': 600},
+                                        {'label': 'Type V - Brown', 'value': 800},
+                                        {'label': 'Type VI - Dark Brown/Black', 'value': 1000}
+                                    ],
+                                    value=200,
+                                    clearable=False,
+                                    style={"width": "400px", "margin": "10px auto"}
+                                ),
+                                html.Label("Select Date for MED Calculation:", style={"fontWeight": "bold", "color": "#34495e"}),
+                                dcc.DatePickerSingle(
+                                    id='med-date-picker',
+                                    min_date_allowed=data['Date'].min().date(),
+                                    max_date_allowed=(data['Date'].max() + pd.Timedelta(days=365)).date(),
+                                    initial_visible_month=data['Date'].max().date(),
+                                    placeholder="Select a date",
+                                    style={"margin": "10px auto"}
+                                )
+                            ]
+                        ),
+                        html.Div(
+                            style={"padding": "20px"},
+                            children=[
+                                html.Label("Time to Erythema (minutes):", style={"fontWeight": "bold", "color": "#34495e"}),
+                                html.Div(id="med-result", style={"textAlign": "center", "margin": "10px", "color": "#34495e"})
+                            ]
+                        )
+                    ]
+                )
             ]
         )
-    ])
+    ]
+)
 
-])
 
 
 @callback(
