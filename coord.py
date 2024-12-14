@@ -1,0 +1,158 @@
+import pandas as pd
+
+# Full dataset
+city_data = [
+    {"City": "Albany, N.Y.", "Lat_Deg": 42, "Lat_Min": 40, "Lon_Deg": 73, "Lon_Min": 45, "Time": "12:00 noon"},
+    {"City": "Albuquerque, N.M.", "Lat_Deg": 35, "Lat_Min": 5, "Lon_Deg": 106, "Lon_Min": 39, "Time": "10:00 a.m."},
+    {"City": "Amarillo, Tex.", "Lat_Deg": 35, "Lat_Min": 11, "Lon_Deg": 101, "Lon_Min": 50, "Time": "11:00 a.m."},
+    {"City": "Anchorage, Alaska", "Lat_Deg": 61, "Lat_Min": 13, "Lon_Deg": 149, "Lon_Min": 54, "Time": "8:00 a.m."},
+    {"City": "Atlanta, Ga.", "Lat_Deg": 33, "Lat_Min": 45, "Lon_Deg": 84, "Lon_Min": 23, "Time": "12:00 noon"},
+    {"City": "Austin, Tex.", "Lat_Deg": 30, "Lat_Min": 16, "Lon_Deg": 97, "Lon_Min": 44, "Time": "11:00 a.m."},
+    {"City": "Baker, Ore.", "Lat_Deg": 44, "Lat_Min": 47, "Lon_Deg": 117, "Lon_Min": 50, "Time": "9:00 a.m."},
+    {"City": "Baltimore, Md.", "Lat_Deg": 39, "Lat_Min": 18, "Lon_Deg": 76, "Lon_Min": 38, "Time": "12:00 noon"},
+    {"City": "Bangor, Maine", "Lat_Deg": 44, "Lat_Min": 48, "Lon_Deg": 68, "Lon_Min": 47, "Time": "12:00 noon"},
+    {"City": "Birmingham, Ala.", "Lat_Deg": 33, "Lat_Min": 30, "Lon_Deg": 86, "Lon_Min": 50, "Time": "11:00 a.m."},
+    {"City": "Bismarck, N.D.", "Lat_Deg": 46, "Lat_Min": 48, "Lon_Deg": 100, "Lon_Min": 47, "Time": "11:00 a.m."},
+    {"City": "Boise, Idaho", "Lat_Deg": 43, "Lat_Min": 36, "Lon_Deg": 116, "Lon_Min": 13, "Time": "10:00 a.m."},
+    {"City": "Boston, Mass.", "Lat_Deg": 42, "Lat_Min": 21, "Lon_Deg": 71, "Lon_Min": 5, "Time": "12:00 noon"},
+    {"City": "Buffalo, N.Y.", "Lat_Deg": 42, "Lat_Min": 55, "Lon_Deg": 78, "Lon_Min": 50, "Time": "12:00 noon"},
+    {"City": "Calgary, Alba., Can.", "Lat_Deg": 51, "Lat_Min": 1, "Lon_Deg": 114, "Lon_Min": 1, "Time": "10:00 a.m."},
+    {"City": "Carlsbad, N.M.", "Lat_Deg": 32, "Lat_Min": 26, "Lon_Deg": 104, "Lon_Min": 15, "Time": "10:00 a.m."},
+    {"City": "Charleston, S.C.", "Lat_Deg": 32, "Lat_Min": 47, "Lon_Deg": 79, "Lon_Min": 56, "Time": "12:00 noon"},
+    {"City": "Charleston, W. Va.", "Lat_Deg": 38, "Lat_Min": 21, "Lon_Deg": 81, "Lon_Min": 38, "Time": "12:00 noon"},
+    {"City": "Charlotte, N.C.", "Lat_Deg": 35, "Lat_Min": 14, "Lon_Deg": 80, "Lon_Min": 50, "Time": "12:00 noon"},
+    {"City": "Cheyenne, Wyo.", "Lat_Deg": 41, "Lat_Min": 9, "Lon_Deg": 104, "Lon_Min": 52, "Time": "10:00 a.m."},
+    {"City": "Chicago, Ill.", "Lat_Deg": 41, "Lat_Min": 50, "Lon_Deg": 87, "Lon_Min": 37, "Time": "11:00 a.m."},
+    {"City": "Cincinnati, Ohio", "Lat_Deg": 39, "Lat_Min": 8, "Lon_Deg": 84, "Lon_Min": 30, "Time": "12:00 noon"},
+    {"City": "Cleveland, Ohio", "Lat_Deg": 41, "Lat_Min": 28, "Lon_Deg": 81, "Lon_Min": 37, "Time": "12:00 noon"},
+    {"City": "Columbia, S.C.", "Lat_Deg": 34, "Lat_Min": 0, "Lon_Deg": 81, "Lon_Min": 2, "Time": "12:00 noon"},
+    {"City": "Columbus, Ohio", "Lat_Deg": 40, "Lat_Min": 0, "Lon_Deg": 83, "Lon_Min": 1, "Time": "12:00 noon"},
+    {"City": "Dallas, Tex.", "Lat_Deg": 32, "Lat_Min": 46, "Lon_Deg": 96, "Lon_Min": 46, "Time": "11:00 a.m."},
+    {"City": "Denver, Colo.", "Lat_Deg": 39, "Lat_Min": 45, "Lon_Deg": 105, "Lon_Min": 0, "Time": "10:00 a.m."},
+    {"City": "Des Moines, Iowa", "Lat_Deg": 41, "Lat_Min": 35, "Lon_Deg": 93, "Lon_Min": 37, "Time": "11:00 a.m."},
+    {"City": "Detroit, Mich.", "Lat_Deg": 42, "Lat_Min": 20, "Lon_Deg": 83, "Lon_Min": 3, "Time": "12:00 noon"},
+    {"City": "Dubuque, Iowa", "Lat_Deg": 42, "Lat_Min": 31, "Lon_Deg": 90, "Lon_Min": 40, "Time": "11:00 a.m."},
+    {"City": "Duluth, Minn.", "Lat_Deg": 46, "Lat_Min": 49, "Lon_Deg": 92, "Lon_Min": 5, "Time": "11:00 a.m."},
+    {"City": "Eastport, Maine", "Lat_Deg": 44, "Lat_Min": 54, "Lon_Deg": 67, "Lon_Min": 0, "Time": "12:00 noon"},
+    {"City": "Edmonton, Alb., Can.", "Lat_Deg": 53, "Lat_Min": 34, "Lon_Deg": 113, "Lon_Min": 28, "Time": "10:00 a.m."},
+    {"City": "El Centro, Calif.", "Lat_Deg": 32, "Lat_Min": 38, "Lon_Deg": 115, "Lon_Min": 33, "Time": "9:00 a.m."},
+    {"City": "El Paso, Tex.", "Lat_Deg": 31, "Lat_Min": 46, "Lon_Deg": 106, "Lon_Min": 29, "Time": "10:00 a.m."},
+    {"City": "Eugene, Ore.", "Lat_Deg": 44, "Lat_Min": 3, "Lon_Deg": 123, "Lon_Min": 5, "Time": "9:00 a.m."},
+    {"City": "Fargo, N.D.", "Lat_Deg": 46, "Lat_Min": 52, "Lon_Deg": 96, "Lon_Min": 48, "Time": "11:00 a.m."},
+    {"City": "Flagstaff, Ariz.", "Lat_Deg": 35, "Lat_Min": 13, "Lon_Deg": 111, "Lon_Min": 41, "Time": "10:00 a.m."},
+    {"City": "Fort Worth, Tex.", "Lat_Deg": 32, "Lat_Min": 43, "Lon_Deg": 97, "Lon_Min": 19, "Time": "11:00 a.m."},
+    {"City": "Fresno, Calif.", "Lat_Deg": 36, "Lat_Min": 44, "Lon_Deg": 119, "Lon_Min": 48, "Time": "9:00 a.m."},
+    {"City": "Grand Junction, Colo.", "Lat_Deg": 39, "Lat_Min": 5, "Lon_Deg": 108, "Lon_Min": 33, "Time": "10:00 a.m."},
+    {"City": "Grand Rapids, Mich.", "Lat_Deg": 42, "Lat_Min": 58, "Lon_Deg": 85, "Lon_Min": 40, "Time": "12:00 noon"},
+    {"City": "Havre, Mont.", "Lat_Deg": 48, "Lat_Min": 33, "Lon_Deg": 109, "Lon_Min": 43, "Time": "10:00 a.m."},
+    {"City": "Helena, Mont.", "Lat_Deg": 46, "Lat_Min": 35, "Lon_Deg": 112, "Lon_Min": 2, "Time": "10:00 a.m."},
+    {"City": "Honolulu, Hawaii", "Lat_Deg": 21, "Lat_Min": 18, "Lon_Deg": 157, "Lon_Min": 50, "Time": "7:00 a.m."},
+    {"City": "Hot Springs, Ark.", "Lat_Deg": 34, "Lat_Min": 31, "Lon_Deg": 93, "Lon_Min": 3, "Time": "11:00 a.m."},
+    {"City": "Houston, Tex.", "Lat_Deg": 29, "Lat_Min": 45, "Lon_Deg": 95, "Lon_Min": 21, "Time": "11:00 a.m."},
+    {"City": "Idaho Falls, Idaho", "Lat_Deg": 43, "Lat_Min": 30, "Lon_Deg": 112, "Lon_Min": 1, "Time": "10:00 a.m."},
+    {"City": "Indianapolis, Ind.", "Lat_Deg": 39, "Lat_Min": 46, "Lon_Deg": 86, "Lon_Min": 10, "Time": "12:00 noon"},
+    {"City": "Jackson, Miss.", "Lat_Deg": 32, "Lat_Min": 20, "Lon_Deg": 90, "Lon_Min": 12, "Time": "11:00 a.m."},
+    {"City": "Jacksonville, Fla.", "Lat_Deg": 30, "Lat_Min": 22, "Lon_Deg": 81, "Lon_Min": 40, "Time": "12:00 noon"},
+    {"City": "Juneau, Alaska", "Lat_Deg": 58, "Lat_Min": 18, "Lon_Deg": 134, "Lon_Min": 24, "Time": "8:00 a.m."},
+    {"City": "Kansas City, Mo.", "Lat_Deg": 39, "Lat_Min": 6, "Lon_Deg": 94, "Lon_Min": 35, "Time": "11:00 a.m."},
+    {"City": "Key West, Fla.", "Lat_Deg": 24, "Lat_Min": 33, "Lon_Deg": 81, "Lon_Min": 48, "Time": "12:00 noon"},
+    {"City": "Kingston, Ont., Can.", "Lat_Deg": 44, "Lat_Min": 15, "Lon_Deg": 76, "Lon_Min": 30, "Time": "12:00 noon"},
+    {"City": "Klamath Falls, Ore.", "Lat_Deg": 42, "Lat_Min": 10, "Lon_Deg": 121, "Lon_Min": 44, "Time": "9:00 a.m."},
+    {"City": "Knoxville, Tenn.", "Lat_Deg": 35, "Lat_Min": 57, "Lon_Deg": 83, "Lon_Min": 56, "Time": "12:00 noon"},
+    {"City": "Las Vegas, Nev.", "Lat_Deg": 36, "Lat_Min": 10, "Lon_Deg": 115, "Lon_Min": 12, "Time": "9:00 a.m."},
+    {"City": "Lewiston, Idaho", "Lat_Deg": 46, "Lat_Min": 24, "Lon_Deg": 117, "Lon_Min": 2, "Time": "9:00 a.m."},
+    {"City": "Lincoln, Neb.", "Lat_Deg": 40, "Lat_Min": 50, "Lon_Deg": 96, "Lon_Min": 40, "Time": "11:00 a.m."},
+    {"City": "London, Ont., Can.", "Lat_Deg": 43, "Lat_Min": 2, "Lon_Deg": 81, "Lon_Min": 34, "Time": "12:00 noon"},
+    {"City": "Long Beach, Calif.", "Lat_Deg": 33, "Lat_Min": 46, "Lon_Deg": 118, "Lon_Min": 11, "Time": "9:00 a.m."},
+    {"City": "Los Angeles, Calif.", "Lat_Deg": 34, "Lat_Min": 3, "Lon_Deg": 118, "Lon_Min": 15, "Time": "9:00 a.m."},
+    {"City": "Louisville, Ky.", "Lat_Deg": 38, "Lat_Min": 15, "Lon_Deg": 85, "Lon_Min": 46, "Time": "12:00 noon"},
+    {"City": "Manchester, N.H.", "Lat_Deg": 43, "Lat_Min": 0, "Lon_Deg": 71, "Lon_Min": 30, "Time": "12:00 noon"},
+    {"City": "Memphis, Tenn.", "Lat_Deg": 35, "Lat_Min": 9, "Lon_Deg": 90, "Lon_Min": 3, "Time": "11:00 a.m."},
+    {"City": "Miami, Fla.", "Lat_Deg": 25, "Lat_Min": 46, "Lon_Deg": 80, "Lon_Min": 12, "Time": "12:00 noon"},
+    {"City": "Milwaukee, Wis.", "Lat_Deg": 43, "Lat_Min": 2, "Lon_Deg": 87, "Lon_Min": 55, "Time": "11:00 a.m."},
+    {"City": "Minneapolis, Minn.", "Lat_Deg": 44, "Lat_Min": 59, "Lon_Deg": 93, "Lon_Min": 14, "Time": "11:00 a.m."},
+    {"City": "Mobile, Ala.", "Lat_Deg": 30, "Lat_Min": 42, "Lon_Deg": 88, "Lon_Min": 3, "Time": "11:00 a.m."},
+    {"City": "Montgomery, Ala.", "Lat_Deg": 32, "Lat_Min": 21, "Lon_Deg": 86, "Lon_Min": 18, "Time": "11:00 a.m."},
+    {"City": "Montpelier, Vt.", "Lat_Deg": 44, "Lat_Min": 15, "Lon_Deg": 72, "Lon_Min": 32, "Time": "12:00 noon"},
+    {"City": "Montreal, Que., Can.", "Lat_Deg": 45, "Lat_Min": 30, "Lon_Deg": 73, "Lon_Min": 35, "Time": "12:00 noon"},
+    {"City": "Moose Jaw, Sask., Can.", "Lat_Deg": 50, "Lat_Min": 37, "Lon_Deg": 105, "Lon_Min": 31, "Time": "11:00 a.m."},
+    {"City": "Nashville, Tenn.", "Lat_Deg": 36, "Lat_Min": 10, "Lon_Deg": 86, "Lon_Min": 47, "Time": "11:00 a.m."},
+    {"City": "Nelson, B.C., Can.", "Lat_Deg": 49, "Lat_Min": 30, "Lon_Deg": 117, "Lon_Min": 17, "Time": "9:00 a.m."},
+    {"City": "Newark, N.J.", "Lat_Deg": 40, "Lat_Min": 44, "Lon_Deg": 74, "Lon_Min": 10, "Time": "12:00 noon"},
+    {"City": "New Haven, Conn.", "Lat_Deg": 41, "Lat_Min": 19, "Lon_Deg": 72, "Lon_Min": 55, "Time": "12:00 noon"},
+    {"City": "New Orleans, La.", "Lat_Deg": 29, "Lat_Min": 57, "Lon_Deg": 90, "Lon_Min": 4, "Time": "11:00 a.m."},
+    {"City": "New York, N.Y.", "Lat_Deg": 40, "Lat_Min": 47, "Lon_Deg": 73, "Lon_Min": 58, "Time": "12:00 noon"},
+    {"City": "Nome, Alaska", "Lat_Deg": 64, "Lat_Min": 25, "Lon_Deg": 165, "Lon_Min": 30, "Time": "8:00 a.m."},
+    {"City": "Oakland, Calif.", "Lat_Deg": 37, "Lat_Min": 48, "Lon_Deg": 122, "Lon_Min": 16, "Time": "9:00 a.m."},
+    {"City": "Oklahoma City, Okla.", "Lat_Deg": 35, "Lat_Min": 26, "Lon_Deg": 97, "Lon_Min": 28, "Time": "11:00 a.m."},
+    {"City": "Omaha, Neb.", "Lat_Deg": 41, "Lat_Min": 15, "Lon_Deg": 95, "Lon_Min": 56, "Time": "11:00 a.m."},
+    {"City": "Ottawa, Ont., Can.", "Lat_Deg": 45, "Lat_Min": 24, "Lon_Deg": 75, "Lon_Min": 43, "Time": "12:00 noon"},
+    {"City": "Philadelphia, Pa.", "Lat_Deg": 39, "Lat_Min": 57, "Lon_Deg": 75, "Lon_Min": 10, "Time": "12:00 noon"},
+    {"City": "Phoenix, Ariz.", "Lat_Deg": 33, "Lat_Min": 29, "Lon_Deg": 112, "Lon_Min": 4, "Time": "10:00 a.m."},
+    {"City": "Pierre, S.D.", "Lat_Deg": 44, "Lat_Min": 22, "Lon_Deg": 100, "Lon_Min": 21, "Time": "11:00 a.m."},
+    {"City": "Pittsburgh, Pa.", "Lat_Deg": 40, "Lat_Min": 27, "Lon_Deg": 79, "Lon_Min": 57, "Time": "12:00 noon"},
+    {"City": "Portland, Maine", "Lat_Deg": 43, "Lat_Min": 40, "Lon_Deg": 70, "Lon_Min": 15, "Time": "12:00 noon"},
+    {"City": "Portland, Ore.", "Lat_Deg": 45, "Lat_Min": 31, "Lon_Deg": 122, "Lon_Min": 41, "Time": "9:00 a.m."},
+    {"City": "Providence, R.I.", "Lat_Deg": 41, "Lat_Min": 50, "Lon_Deg": 71, "Lon_Min": 24, "Time": "12:00 noon"},
+    {"City": "Quebec, Que., Can.", "Lat_Deg": 46, "Lat_Min": 49, "Lon_Deg": 71, "Lon_Min": 11, "Time": "12:00 noon"},
+    {"City": "Raleigh, N.C.", "Lat_Deg": 35, "Lat_Min": 46, "Lon_Deg": 78, "Lon_Min": 39, "Time": "12:00 noon"},
+    {"City": "Reno, Nev.", "Lat_Deg": 39, "Lat_Min": 30, "Lon_Deg": 119, "Lon_Min": 49, "Time": "9:00 a.m."},
+    {"City": "Richfield, Utah", "Lat_Deg": 38, "Lat_Min": 46, "Lon_Deg": 112, "Lon_Min": 5, "Time": "10:00 a.m."},
+    {"City": "Richmond, Va.", "Lat_Deg": 37, "Lat_Min": 33, "Lon_Deg": 77, "Lon_Min": 29, "Time": "12:00 noon"},
+    {"City": "Roanoke, Va.", "Lat_Deg": 37, "Lat_Min": 17, "Lon_Deg": 79, "Lon_Min": 57, "Time": "12:00 noon"},
+    {"City": "Sacramento, Calif.", "Lat_Deg": 38, "Lat_Min": 35, "Lon_Deg": 121, "Lon_Min": 30, "Time": "9:00 a.m."},
+    {"City": "St. John, N.B., Can.", "Lat_Deg": 45, "Lat_Min": 18, "Lon_Deg": 66, "Lon_Min": 10, "Time": "1:00 p.m."},
+    {"City": "St. Louis, Mo.", "Lat_Deg": 38, "Lat_Min": 35, "Lon_Deg": 90, "Lon_Min": 12, "Time": "11:00 a.m."},
+    {"City": "Salt Lake City, Utah", "Lat_Deg": 40, "Lat_Min": 46, "Lon_Deg": 111, "Lon_Min": 54, "Time": "10:00 a.m."},
+    {"City": "San Antonio, Tex.", "Lat_Deg": 29, "Lat_Min": 23, "Lon_Deg": 98, "Lon_Min": 33, "Time": "11:00 a.m."},
+    {"City": "San Diego, Calif.", "Lat_Deg": 32, "Lat_Min": 42, "Lon_Deg": 117, "Lon_Min": 10, "Time": "9:00 a.m."},
+    {"City": "San Francisco, Calif.", "Lat_Deg": 37, "Lat_Min": 47, "Lon_Deg": 122, "Lon_Min": 26, "Time": "9:00 a.m."},
+    {"City": "San Jose, Calif.", "Lat_Deg": 37, "Lat_Min": 20, "Lon_Deg": 121, "Lon_Min": 53, "Time": "9:00 a.m."},
+    {"City": "San Juan, P.R.", "Lat_Deg": 18, "Lat_Min": 30, "Lon_Deg": 66, "Lon_Min": 10, "Time": "1:00 p.m."},
+    {"City": "Santa Fe, N.M.", "Lat_Deg": 35, "Lat_Min": 41, "Lon_Deg": 105, "Lon_Min": 57, "Time": "10:00 a.m."},
+    {"City": "Savannah, Ga.", "Lat_Deg": 32, "Lat_Min": 5, "Lon_Deg": 81, "Lon_Min": 5, "Time": "12:00 noon"},
+    {"City": "Seattle, Wash.", "Lat_Deg": 47, "Lat_Min": 37, "Lon_Deg": 122, "Lon_Min": 20, "Time": "9:00 a.m."},
+    {"City": "Shreveport, La.", "Lat_Deg": 32, "Lat_Min": 28, "Lon_Deg": 93, "Lon_Min": 42, "Time": "11:00 a.m."},
+    {"City": "Sioux Falls, S.D.", "Lat_Deg": 43, "Lat_Min": 33, "Lon_Deg": 96, "Lon_Min": 44, "Time": "11:00 a.m."},
+    {"City": "Sitka, Alaska", "Lat_Deg": 57, "Lat_Min": 10, "Lon_Deg": 135, "Lon_Min": 15, "Time": "8:00 a.m."},
+    {"City": "Spokane, Wash.", "Lat_Deg": 47, "Lat_Min": 40, "Lon_Deg": 117, "Lon_Min": 26, "Time": "9:00 a.m."},
+    {"City": "Springfield, Ill.", "Lat_Deg": 39, "Lat_Min": 48, "Lon_Deg": 89, "Lon_Min": 38, "Time": "11:00 a.m."},
+    {"City": "Springfield, Mass.", "Lat_Deg": 42, "Lat_Min": 6, "Lon_Deg": 72, "Lon_Min": 34, "Time": "12:00 noon"},
+    {"City": "Springfield, Mo.", "Lat_Deg": 37, "Lat_Min": 13, "Lon_Deg": 93, "Lon_Min": 17, "Time": "11:00 a.m."},
+    {"City": "Syracuse, N.Y.", "Lat_Deg": 43, "Lat_Min": 2, "Lon_Deg": 76, "Lon_Min": 8, "Time": "12:00 noon"},
+    {"City": "Tampa, Fla.", "Lat_Deg": 27, "Lat_Min": 57, "Lon_Deg": 82, "Lon_Min": 27, "Time": "12:00 noon"},
+    {"City": "Toledo, Ohio", "Lat_Deg": 41, "Lat_Min": 39, "Lon_Deg": 83, "Lon_Min": 33, "Time": "12:00 noon"},
+    {"City": "Toronto, Ont., Can.", "Lat_Deg": 43, "Lat_Min": 40, "Lon_Deg": 79, "Lon_Min": 24, "Time": "12:00 noon"},
+    {"City": "Tulsa, Okla.", "Lat_Deg": 36, "Lat_Min": 9, "Lon_Deg": 95, "Lon_Min": 59, "Time": "11:00 a.m."},
+    {"City": "Vancouver, B.C., Can.", "Lat_Deg": 49, "Lat_Min": 13, "Lon_Deg": 123, "Lon_Min": 6, "Time": "9:00 a.m."},
+    {"City": "Victoria, B.C., Can.", "Lat_Deg": 48, "Lat_Min": 25, "Lon_Deg": 123, "Lon_Min": 21, "Time": "9:00 a.m."},
+    {"City": "Virginia Beach, Va.", "Lat_Deg": 36, "Lat_Min": 51, "Lon_Deg": 75, "Lon_Min": 58, "Time": "12:00 noon"},
+    {"City": "Washington, D.C.", "Lat_Deg": 38, "Lat_Min": 53, "Lon_Deg": 77, "Lon_Min": 2, "Time": "12:00 noon"},
+    {"City": "Wichita, Kan.", "Lat_Deg": 37, "Lat_Min": 43, "Lon_Deg": 97, "Lon_Min": 17, "Time": "11:00 a.m."},
+    {"City": "Wilmington, N.C.", "Lat_Deg": 34, "Lat_Min": 14, "Lon_Deg": 77, "Lon_Min": 57, "Time": "12:00 noon"},
+    {"City": "Winnipeg, Man., Can.", "Lat_Deg": 49, "Lat_Min": 54, "Lon_Deg": 97, "Lon_Min": 7, "Time": "11:00 a.m."}
+]
+
+# Function to convert time to UTC offset
+def convert_time_to_offset(time):
+    if "noon" in time:
+        return -5
+    elif "a.m." in time:
+        hours = int(time.split(":")[0])
+        return -(12 - hours)
+    elif "p.m." in time:
+        hours = int(time.split(":")[0])
+        return hours - 12
+    return 0
+
+# Convert data to DataFrame
+df = pd.DataFrame(city_data)
+
+# Calculate decimal latitude and longitude
+df["Latitude (Decimal)"] = df["Lat_Deg"] + df["Lat_Min"] / 60
+df["Longitude (Decimal)"] = -(df["Lon_Deg"] + df["Lon_Min"] / 60)
+df["Time Zone Offset"] = df["Time"].apply(convert_time_to_offset)
+
+# Save dataset
+df.to_csv("coordinates.csv", index=False)
+print(df)
