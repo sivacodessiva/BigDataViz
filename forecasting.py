@@ -5,7 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import dash_bootstrap_components as dbc
 
-uv_data_path = 'C:/Users/Siva/Desktop/sivapro/todaysdata.csv'
+uv_data_path = 'todaysdata.csv'
 data = pd.read_csv(uv_data_path)
 
 data['Date'] = pd.to_datetime(data['Date'], format='%Y%m%d')
