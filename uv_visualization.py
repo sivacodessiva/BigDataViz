@@ -5,8 +5,8 @@ import json
 import dash_bootstrap_components as dbc
 
 
-uv_data_path = 'C:/Users/Siva/Desktop/sivapro/todaysdata.csv'
-geojson_path = 'C:/Users/Siva/Desktop/sivapro/us-states.json'
+uv_data_path = 'todaysdata.csv'
+geojson_path = 'us-states.json'
 
 data = pd.read_csv(uv_data_path)
 with open(geojson_path) as f:
