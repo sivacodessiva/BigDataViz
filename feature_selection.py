@@ -4,8 +4,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from itertools import combinations
 
-uv_data_path = 'C:/Users/Siva/Desktop/sivapro/todaysdata.csv'
-geojson_path = 'C:/Users/Siva/Desktop/sivapro/us-states.json'
+uv_data_path = 'todaysdata.csv'
+geojson_path = 'us-states.json'
 
 data = pd.read_csv(uv_data_path)
 with open(geojson_path) as f:
