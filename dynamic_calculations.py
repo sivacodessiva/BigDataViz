@@ -21,7 +21,7 @@ data['Day'] = data['Date'].dt.day
 
 
 layout = html.Div([
-    html.H1("Dynamic Calculations and Machine Learning", style={"text-align": "center"}),
+    html.H1("Machine Learning Analysis - Regression Model", style={"text-align": "center"}),
 
     html.Div([
         html.Label("Select Your State:"),
