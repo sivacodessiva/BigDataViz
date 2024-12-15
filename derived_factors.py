@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 import numpy as np
 
 
-uv_data_path = 'C:/Users/Siva/Desktop/sivapro/todaysdata.csv'
+uv_data_path = 'todaysdata.csv'
 data = pd.read_csv(uv_data_path)
 
 data['Date'] = pd.to_datetime(data['Date'], format='%Y%m%d')
