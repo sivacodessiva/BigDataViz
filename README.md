@@ -42,6 +42,8 @@ The project uses the following datasets:
   - Includes related meteorological factors like cloud transmission, aerosol transmission, and total column ozone.
 - Geographical Data (`us-states.json`):
   - GeoJSON file used for interactive map visualizations.
+ 
+## IMPORTANT NOTE - The todaysdata.csv file is in a compressed format, please first extract it after cloning so that the files load the dataset correctly.
   
 ### Key Fields in the Data:
 - `Date`: Measurement date in YYYYMMDD format.
