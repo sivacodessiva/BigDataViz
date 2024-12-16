@@ -120,6 +120,10 @@ Ensure you have the following installed:
    - Clear temporal and geographical patterns in UV Index data.
    - Monthly and seasonal trends derived from machine learning models.
 
+
+
+
+
 2. Forecasting Accuracy:
    - Time-series predictions using Prophet with confidence intervals.
    - Regression models highlighting the impact of key factors on UV Index.
@@ -129,3 +133,21 @@ Ensure you have the following installed:
    - Quantitative metrics to support decision-making in UV safety.
 
 ---
+
+IMAGES:
+
+![uv_visualization](https://github.com/user-attachments/assets/dddf1ad1-20d8-4452-a6ec-da943381b45b)
+
+![regression](https://github.com/user-attachments/assets/0ca528a9-020f-4502-ba9d-7040ecbb65f2)
+
+![forecast_prophet](https://github.com/user-attachments/assets/61c06146-c32b-4774-a087-6f57a289017d)
+
+![forecsating_interac_insights](https://github.com/user-attachments/assets/1be93e95-44ea-4fe3-8beb-dc45cc9f9010)
+
+![forecasting_skindamage_risk_analysis](https://github.com/user-attachments/assets/0d79896f-7c42-4d0c-b107-897daf48e283)
+
+![forecasting_MED](https://github.com/user-attachments/assets/74342f37-05bf-42bc-9da3-3f221bd892eb)
+
+![derived_factors_1](https://github.com/user-attachments/assets/59c52edb-492f-4f50-a101-c85af3a541ae)
+
+![derived_factors_2](https://github.com/user-attachments/assets/5838104f-f707-42b1-8733-b9a97ca94c8f)
