@@ -40,7 +40,6 @@ layout = html.Div([
             id='analysis-type-dropdown',
             options=[
                 {'label': 'Predict Cloudy Sky UVI', 'value': 'regression'},
-                {'label': 'Cluster States', 'value': 'clustering'}
             ],
             value='regression',
             clearable=False,
