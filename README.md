@@ -3,7 +3,7 @@
 
 
 
-```markdown
+
 # UV Index Dashboard: Data Visualization, Forecasting, and Analysis
 
 ## Table of Contents
