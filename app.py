@@ -13,14 +13,17 @@ app.title = "UV Index Dashboard"
 register_callbacks(app)
 
 
-app.layout = html.Div(
-    style={"backgroundColor": "#f8f9fa", "minHeight": "100vh", "padding": "20px"},
-    children=[
-        dcc.Location(id="url", refresh=False),
-        html.Div(id="page-content")
-    ]
-)
+app.layout = html.Div([
+    html.H1("UV Index Visual Analytics", style={"text-align": "center"}),
 
+    html.Div(
+        style={"backgroundColor": "#f8f9fa", "minHeight": "100vh", "padding": "20px"},
+        children=[
+            dcc.Location(id="url", refresh=False),
+            html.Div(id="page-content")
+        ]
+    )
+])
 
 @app.callback(Output("page-content", "children"), Input("url", "pathname"))
 def display_page(pathname):
@@ -55,11 +58,11 @@ def display_page(pathname):
                     },
                     children=[
                         html.H3(
-                            "UV Index Visualization",
+                            "UV Index Visualizations",
                             style={"fontFamily": "Arial, sans-serif", "fontWeight": "bold", "color": "#343a40"}
                         ),
                         html.P(
-                            "Explore detailed visualizations of UV Index trends and data points.",
+                            "Visualizations of UV Index trends and data points.",
                             style={"fontSize": "14px", "color": "#6c757d"}
                         ),
                         dbc.Button(
@@ -83,15 +86,15 @@ def display_page(pathname):
                     },
                     children=[
                         html.H3(
-                            "Dynamic Calculations",
+                            "Forecasting - Regression Model",
                             style={"fontFamily": "Arial, sans-serif", "fontWeight": "bold", "color": "#343a40"}
                         ),
                         html.P(
-                            "Perform dynamic calculations using custom parameters and analyze results.",
+                            "Regression Model for Cloudy Sky UVI forecasting with different influencing factors.",
                             style={"fontSize": "14px", "color": "#6c757d"}
                         ),
                         dbc.Button(
-                            "Go to Dynamic Calculations",
+                            "Go to Regression Model Forecasting",
                             href="/dynamic-calculations",
                             color="success",
                             style={"marginTop": "10px"}
@@ -111,11 +114,11 @@ def display_page(pathname):
                     },
                     children=[
                         html.H3(
-                            "Forecasting",
+                            "Forecasting using Prophet model",
                             style={"fontFamily": "Arial, sans-serif", "fontWeight": "bold", "color": "#343a40"}
                         ),
                         html.P(
-                            "View predictive analysis and forecasts of UV Index levels for future dates.",
+                            "Predictive analysis and forecasts of UV Index levels for future dates, Skin Damage Risk Analysis, Minimal Erythemal Doese (MED) Analysis",
                             style={"fontSize": "14px", "color": "#6c757d"}
                         ),
                         dbc.Button(
@@ -143,7 +146,7 @@ def display_page(pathname):
                             style={"fontFamily": "Arial, sans-serif", "fontWeight": "bold", "color": "#343a40"}
                         ),
                         html.P(
-                            "Analyze and visualize derived factors from UV Index data for deeper insights.",
+                            "Analyze and visualize derived factors of UV Index",
                             style={"fontSize": "14px", "color": "#6c757d"}
                         ),
                         dbc.Button(
