@@ -152,7 +152,7 @@ layout = html.Div(
                     children=[
                         dbc.Card(
                             style={
-                                "width": "400px",
+                                "width": "600px",
                                 "padding": "20px",
                                 "margin": "10px",
                                 "border": "2px solid #dee2e6",
@@ -167,7 +167,7 @@ layout = html.Div(
                         ),
                         dbc.Card(
                             style={
-                                "width": "400px",
+                                "width": "800px",
                                 "padding": "20px",
                                 "margin": "10px",
                                 "border": "2px solid #dee2e6",
