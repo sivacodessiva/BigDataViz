@@ -12,7 +12,7 @@ data = pd.read_csv(uv_data_path)
 data['Date'] = pd.to_datetime(data['Date'], format='%Y%m%d')
 
 layout = html.Div([
-    html.H1("Derived Factor Calculations and Visualizations", style={"text-align": "center"}),
+    html.H1("Derived Factor Calculations", style={"text-align": "center"}),
 
 
     html.Div([
